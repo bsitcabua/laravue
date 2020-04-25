@@ -5,6 +5,7 @@ Vue.use(Router);
 import firstPage from './components/pages/firstPage';
 import secondPage from './components/pages/secondPage';
 import hooks from './components/basic/hooks';
+import methods from './components/basic/methods';
 
 const routes = [
     {
@@ -20,7 +21,12 @@ const routes = [
     {
         path: '/hooks',
         component: hooks
-    }
+    },
+    // vue methods
+    {
+        path: '/methods',
+        component: methods
+    },
 ];
 
 export default new Router({
