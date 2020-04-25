@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/welcome', 'WelcomeController@index')->name('welcome');
+Route::get('/test', 'TestController@index')->name('test');
 
 Route::any('{slug}', function(){
     return view('index');
