@@ -15,5 +15,6 @@ mix.js('resources/js/app.js', 'public/js');
     // .sass('resources/sass/app.scss', 'public/css');
 
 mix.styles([
-    'public/css/app.css'
+    'public/css/grid.min.css',
+    'public/css/main.css',
 ], 'public/css/all.css');

@@ -35272,7 +35272,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 
-var routes = [{
+var routes = [// Projects routes...
+// Ba
+// Basics tutorials routes
+{
   path: '/my-new-vue-route',
   component: _components_pages_firstPage__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {

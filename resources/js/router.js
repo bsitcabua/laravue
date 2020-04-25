@@ -8,6 +8,11 @@ import hooks from './components/basic/hooks';
 import methods from './components/basic/methods';
 
 const routes = [
+    // Projects routes...
+
+    // Ba
+
+    // Basics tutorials routes
     {
         path: '/my-new-vue-route',
         component: firstPage 
