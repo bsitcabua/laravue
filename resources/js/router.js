@@ -7,10 +7,28 @@ import secondPage from './components/pages/secondPage';
 import hooks from './components/basic/hooks';
 import methods from './components/basic/methods';
 
+// admin project pages 
+import home from './components/pages/home';
+import tags from './admin/pages/tags';
+import category from './admin/pages/category';
+
 const routes = [
     // Projects routes...
-
-    // Ba
+    {
+        path: '/', 
+        component: home, 
+       
+    },
+    {
+        path: '/tags', 
+        component: tags, 
+       
+    },
+    {
+        path: '/category', 
+        component: category, 
+       
+    },
 
     // Basics tutorials routes
     {
