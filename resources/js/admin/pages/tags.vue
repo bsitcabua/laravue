@@ -18,8 +18,6 @@
 								<th style="text-align: center;">Action</th>
 							</tr>
 								<!-- TABLE TITLE -->
-
-
 								<!-- ITEMS -->
 							<tr v-for="(tag, i) in tags" :key="i" v-if="tags.length">
 								<td>{{++i}}</td>
