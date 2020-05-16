@@ -16,10 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 // Admin routes
 Route::group(['prefix' => 'api'], function () {
+    // Tag
     Route::get('/tags', 'TagController@index');
     Route::post('/store-tag', 'TagController@store');
     Route::post('/update-tag', 'TagController@update');
     Route::post('/destroy-tag', 'TagController@destroy');
+
+    // Category
+    Route::get('/categories', 'CategoryController@index');
+    Route::post('/store-category', 'CategoryController@store');
+    Route::post('/upload-category', 'CategoryController@upload');
+
 });
 
 // Route::post('app/edit_tag', 'AdminController@editTag');

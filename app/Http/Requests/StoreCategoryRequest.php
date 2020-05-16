@@ -5,30 +5,30 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
-class DestroyRequest extends FormRequest
+class StoreCategotyRequest extends FormRequest
 {
     public $validator = null;
 
-    public function authorize() 
+    public function authorize()
     {
         return true;
     }
 
-    public function rules() 
+    public function rules()
     {
         return [
-            'id' => 'required'
+            'tagCategory' => 'required'
         ];
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
-            'id.required' => 'Opps something went wrong!'
+            'tagCategory.required' => 'Category name is required.'
         ];
     }
 
-    protected function failedValidation($validator) 
+    protected function failedValidation($validator)
     {
         $this->validator = $validator;
     }

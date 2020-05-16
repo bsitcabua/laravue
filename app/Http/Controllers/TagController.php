@@ -13,25 +13,31 @@ use App\Http\Requests\DestroyRequest;
 class TagController extends BaseController
 {
 
-    public function getTags() {
+    public function getTags() 
+    {
         return Tag::orderBy("created_at", "desc")->get();
     }
-    public function index(FetchRequest $request) {
+
+    public function index(FetchRequest $request) 
+    {
         
-        if($response = $this->validateRequest($request)){
+        if( $response = $this->validateRequest($request) ) {
             return response()->json($response);
         }
 
         try {
+
             $tags = $this->getTags();
             $response = [ 'status' => 200, 'tags' => $tags, 'msg' => 'Fetched tags'];
             return response()->json($response);
+
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
     }
 
-    public function store(StoreTagRequest $request) {
+    public function store(StoreTagRequest $request)
+    {
         // Validate
         if ( $response = $this->validateRequest($request) ) {
             return response()->json($response);
@@ -39,11 +45,11 @@ class TagController extends BaseController
         
         try {
             // Check tag name if exists
-            $tagExist = Tag::where('tagName', $request->tagName)
+            $isTagExist = Tag::where('tagName', $request->tagName)
                         // ->where('store_id',$request->store_id) // temp we will be using auth
                         ->first();
 
-            if ( $tagExist ) {
+            if ( $isTagExist ) {
                 $response = ['status' => 409, 'msg' => 'Tag has already been exist.'];
                 return response()->json($response);
             }
@@ -58,12 +64,14 @@ class TagController extends BaseController
 
             return response()->json($response);
 
-        } catch (\Throwable $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
-    public function update(UpdateTagRequest $request) {
+    public function update(UpdateTagRequest $request)
+    {
+
         if ( $response = $this->validateRequest($request) ) {
             return response()->json($response);
         }
@@ -73,11 +81,11 @@ class TagController extends BaseController
             $tag = Tag::find($id);
 
             // Check tag name if exists
-            $tagExist = Tag::where('tagName', $request->tagName)
+            $isTagExist = Tag::where('tagName', $request->tagName)
                         ->where('id', '!=', $id)
                         ->first();
 
-            if ( $tagExist ) {
+            if ( $isTagExist ) {
                 $response = ['status' => 409, 'msg' => 'Tag has already been exist.'];
                 return response()->json($response);
             }
@@ -92,12 +100,13 @@ class TagController extends BaseController
     
             return response()->json($response);
 
-        } catch (\Throwable $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
-    public function destroy(DestroyRequest $request) {
+    public function destroy(DestroyRequest $request)
+    {
 
         if( $response = $this->validateRequest($request) ) {
             return response()->json($response);
@@ -118,8 +127,8 @@ class TagController extends BaseController
 
             return response()->json($response);
 
-        } catch (\Throwable $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

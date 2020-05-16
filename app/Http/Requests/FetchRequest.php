@@ -9,26 +9,26 @@ class FetchRequest extends FormRequest
 {
     public $validator = null;
 
-    public function authorize()
+    public function authorize() 
     {
         return true;
     }
 
-    public function rules()
+    public function rules() 
     {
         return [
             'user_confirmed' => 'required'
         ];
     }
 
-    public function messages()
+    public function messages() 
     {
         return [
             'user_confirmed.required' => 'Opps something went wrong!'
         ];
     }
 
-    protected function failedValidation($validator)
+    protected function failedValidation($validator) 
     {
         $this->validator = $validator;
     }
