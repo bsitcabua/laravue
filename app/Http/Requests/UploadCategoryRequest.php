@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 
-class StoreCategoryRequest extends FormRequest
+class UploadCategoryRequest extends FormRequest
 {
     public $validator = null;
 
@@ -17,16 +17,16 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'categoryName' => 'required',
-            'iconImage'    => 'required',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048'
         ];
     }
 
     public function messages()
     {
         return [
-            'categoryName.required' => 'Category name is required.',
-            'iconImage.required'    => 'Category Image is required.'
+            'file.required' => 'File is required.',
+            'file.mimes'    => 'Image file must be jpeg, png, jpg, gif, svg, or bmp',
+            'file.max'      => 'The image file size may not be greater than 2048 kilobytes'
         ];
     }
 

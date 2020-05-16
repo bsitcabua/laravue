@@ -17,16 +17,16 @@ class UpdateTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'        => 'required',
-            'tagName'   => 'required'
+            'id'            => 'required',
+            'categoryName'  => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'id.required'       => 'Something went wrong.',
-            'tagName.required'  => 'Tag name is required.',
+            'id.required'           => 'Something went wrong.',
+            'categoryName.required' => 'Category name is required.',
         ];
     }
 

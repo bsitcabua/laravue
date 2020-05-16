@@ -25,7 +25,9 @@ Route::group(['prefix' => 'api'], function () {
     // Category
     Route::get('/categories', 'CategoryController@index');
     Route::post('/store-category', 'CategoryController@store');
+    Route::post('/update-category', 'CategoryController@update');
     Route::post('/upload-category', 'CategoryController@upload');
+    Route::post('/destroy-category', 'CategoryController@destroy');
 
 });
 

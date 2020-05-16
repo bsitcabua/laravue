@@ -8,6 +8,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\FetchRequest;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\UploadCategoryRequest;
 use App\Http\Requests\DestroyRequest;
 
 class CategoryController extends BaseController
@@ -19,7 +20,7 @@ class CategoryController extends BaseController
 
     public function index(FetchRequest $request) 
     {
-        
+
         if( $response = $this->validateRequest($request) ) {
             return response()->json($response);
         }
@@ -54,7 +55,10 @@ class CategoryController extends BaseController
                 return response()->json($response);
             }
 
-            $payload = [ 'categoryName' => strip_tags($request->categoryName) ];
+            $payload = [ 
+                        'categoryName' => strip_tags($request->categoryName),
+                        'iconImage'    => $request->iconImage,
+                    ];
             $category = new Category( $payload );
             if ( $category->save() ) {
                 $categories = $this->getCategories();
@@ -69,17 +73,95 @@ class CategoryController extends BaseController
         }
     }
 
-    public function upload(Request $request)
+    public function upload(UploadCategoryRequest $request)
     {
+
+        // Validate
+        if ( $response = $this->validateRequest($request) ) {
+            return response()->json($response);
+        }
 
         try {
             
-            $fileName = time().'.'.$request->file->extension();
-            $request->file->move(public_path('uploads'), $fileName);
-            return $fileName;
+            $fileName = date('YmdHis').'.'.$request->file->extension();
+            
+            if ( $fileName ) {
+                $request->file->move(public_path('uploads'), $fileName);
+                $response = [ 'status' => 201, 'fileName' => $fileName, 'msg' => 'Image has been uploaded successfully!' ];
+            }
+            else $response = [ 'status' => 500, 'msg' => 'Internal server error' ];
+
+            return response()->json($response);
 
         } catch (\Throwable $th) {
             throw $th;
         }
     }
+
+    public function update(UpdateCategoryRequest $request)
+    {
+        if ( $response = $this->validateRequest($request) ) {
+            return response()->json($response);
+        }
+
+        try {
+            $id = $request->id;
+            $categories = Category::find($id);
+
+            // Check category name if exists
+            $isCategoryExist = Category::where('categoryName', $request->categoryName)
+                        ->where('id', '!=', $id)
+                        ->first();
+
+            if ( $isCategoryExist ) {
+                $response = ['status' => 409, 'msg' => 'Category has already been exist.'];
+                return response()->json($response);
+            }
+    
+            // Continue saving
+            $categories->categoryName   = strip_tags($request->categoryName);
+
+            // Save if not null
+            if($request->iconImageTemp)
+                $categories->iconImage = $request->iconImageTemp;
+
+            if ( $categories->save() ) {
+                $categories = $this->getCategories();
+                $response = [ 'status' => 201, 'categories' => $categories, 'msg' => 'Category has been updated successfully!' ];
+            }
+            else $response = [ 'status' => 500, 'msg' => 'Internal server error' ];
+    
+            return response()->json($response);
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function destroy(DestroyRequest $request)
+    {
+        if( $response = $this->validateRequest($request) ) {
+            return response()->json($response);
+        } 
+
+        try {
+            
+            $id = $request->id;
+            $category = Category::find($id);
+            
+            if( $category ) {
+                if( $category->delete() ){
+                    $categories = $this->getCategories();
+                    $response = [ 'status' => 200, 'categories' => $categories, 'msg' => 'Category has been deleted successfully!'];
+                }
+            }
+            else $response = [ 'status' => 500, 'msg' => 'Internal server error' ];
+
+            return response()->json($response);
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
 }
